@@ -49,18 +49,22 @@ namespace Npgsql.Tests
         [Test]
         public void FromString()
         {
-            Builder.ConnectionString = "Host=myhost;EF Template Database=foo";
+            Builder.ConnectionString = "Host=myhost;EF Template Database=foo;PgPassFile=mypath";
             Assert.That(Builder.Host, Is.EqualTo("myhost"));
             Assert.That(Builder.EntityTemplateDatabase, Is.EqualTo("foo"));
+            Assert.That(Builder.PgPassFile, Is.EqualTo("mypath"));
         }
 
         [Test]
         public void TryGetValue()
         {
-            Builder.ConnectionString = "Host=myhost";
+            Builder.ConnectionString = "Host=myhost;PgPassFile=mypath";
 
             Assert.That(Builder.TryGetValue("Host", out var value), Is.True);
             Assert.That(value, Is.EqualTo("myhost"));
+
+            Assert.That(Builder.TryGetValue("PgPassFile", out value), Is.True);
+            Assert.That(value, Is.EqualTo("mypath"));
 
             Assert.That(Builder.TryGetValue("SomethingUnknown", out value), Is.False);
         }
