@@ -44,6 +44,13 @@ namespace Npgsql.Tests
             Builder.Remove("HOST");
             Assert.That(Builder["host"], Is.EqualTo(""));
             Assert.That(Builder.Count, Is.EqualTo(0));
+            Builder.PgPassFile = "mypath";
+            Assert.That(Builder["PgPassFile"], Is.EqualTo("mypath"));
+            Assert.That(Builder.Count, Is.EqualTo(1));
+            Assert.That(Builder.ConnectionString, Is.EqualTo("PgPassFile=mypath"));
+            Builder.Remove("PgPassFile");
+            Assert.That(Builder["PgPassFile"], Is.EqualTo(""));
+            Assert.That(Builder.Count, Is.EqualTo(0));
         }
 
         [Test]
